@@ -2,8 +2,8 @@
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { onboardingApi } from '@/lib/api/onboarding'; // Adjust path based on your lib folder
-import { UserStateResponce } from '@/app/(protected)/onboarding/page';
 import { useAuth } from './auth-context'; // To react to the user logging out/in
+import { UserStateResponce } from '@/app/(protected)/onboarding/types';
 
 interface WorkspaceContextType {
   state: UserStateResponce | null;
