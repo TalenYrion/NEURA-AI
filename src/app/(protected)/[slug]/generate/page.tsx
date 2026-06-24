@@ -108,7 +108,7 @@ export default function ContentGenerationPage({ params }: PageProps) {
       </div>
 
       {/* Right Stream Terminal Frame Viewport (3 Columns) */}
-      <div className="lg:col-span-3 flex flex-col p-6 bg-[#090D16]">
+      <div className="lg:col-span-3 flex flex-col p-6 bg-[#090D16] min-w-0">
         <div className="flex items-center justify-between border-b border-slate-800/60 pb-3 mb-4">
           <div className="flex items-center gap-2 text-xs font-mono tracking-widest text-slate-400 uppercase">
             <SquareTerminal className="h-3.5 w-3.5 text-slate-500" />
