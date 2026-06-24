@@ -29,7 +29,7 @@ export function UserDropdown() {
 
   const initials = user.fullname
     ? user.fullname.split(' ').map((n) => n[0]).join('').slice(0, 2).toUpperCase()
-    : user.email.slice(0, 2).toUpperCase();
+    : (user.email || 'US').slice(0, 2).toUpperCase();
 
   const handleDisconnect = () => {
     signOutMutation.mutate(undefined, {
