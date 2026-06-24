@@ -18,7 +18,7 @@ export function OutputTerminal({ content }: OutputTerminalProps) {
   useEffect(() => {
     // 💡 Changed to 'instant' because 'smooth' causes major lag during rapid token streams on mobile
     bottomAnchorRef.current?.scrollIntoView({
-      behavior: 'instant', 
+      behavior: 'instant',
       block: 'end',
     });
   }, [content]);
@@ -33,7 +33,7 @@ export function OutputTerminal({ content }: OutputTerminalProps) {
 
       {content ? (
         // 💡 CRITICAL: Added 'max-w-full overflow-hidden' so the markdown renderer respects container bounds
-        <div className="relative z-10 prose prose-invert prose-xs max-w-full overflow-hidden">
+        <div className="relative z-10 prose prose-invert prose-xs max-w-full overflow-hidden prose-pre:max-w-full prose-pre:overflow-x-auto">
           <ReactMarkdown
             components={{
               code({ node, inline, className, children, ...props }: any) {
