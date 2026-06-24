@@ -27,7 +27,7 @@ export function OutputTerminal({ content }: OutputTerminalProps) {
     <div
       ref={terminalRef}
       // 💡 Added 'p-4 md:p-6' to maximize screen space on mobile viewports
-      className="flex-1 w-full bg-[#0D111A]/40 border border-slate-800/80 rounded-2xl p-4 md:p-6 font-mono text-xs leading-relaxed text-slate-300 overflow-y-auto max-h-[calc(100vh-12rem)] relative group"
+      className="flex-1 w-full min-w-0 bg-[#0D111A]/40 border border-slate-800/80 rounded-2xl p-4 md:p-6 font-mono text-xs leading-relaxed text-slate-300 overflow-y-auto max-h-[calc(100vh-12rem)] relative group"
     >
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#1e293b08_1px,transparent_1px),linear-gradient(to_bottom,#1e293b08_1px,transparent_1px)] bg-[size:20px_20px] pointer-events-none" />
 
