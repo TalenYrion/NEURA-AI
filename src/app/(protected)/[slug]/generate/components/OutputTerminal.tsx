@@ -1,3 +1,4 @@
+// src/components/layout/OutputTerminal.tsx
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
@@ -15,8 +16,9 @@ export function OutputTerminal({ content }: OutputTerminalProps) {
   const bottomAnchorRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // 💡 Changed to 'instant' because 'smooth' causes major lag during rapid token streams on mobile
     bottomAnchorRef.current?.scrollIntoView({
-      behavior: 'smooth',
+      behavior: 'instant', 
       block: 'end',
     });
   }, [content]);
@@ -24,12 +26,14 @@ export function OutputTerminal({ content }: OutputTerminalProps) {
   return (
     <div
       ref={terminalRef}
-      className="flex-1 w-full bg-[#0D111A]/40 border border-slate-800/80 rounded-2xl p-6 font-mono text-xs leading-relaxed text-slate-300 overflow-y-auto max-h-[calc(100vh-12rem)] relative group"
+      // 💡 Added 'p-4 md:p-6' to maximize screen space on mobile viewports
+      className="flex-1 w-full bg-[#0D111A]/40 border border-slate-800/80 rounded-2xl p-4 md:p-6 font-mono text-xs leading-relaxed text-slate-300 overflow-y-auto max-h-[calc(100vh-12rem)] relative group"
     >
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#1e293b08_1px,transparent_1px),linear-gradient(to_bottom,#1e293b08_1px,transparent_1px)] bg-[size:20px_20px] pointer-events-none" />
 
       {content ? (
-        <div className="relative z-10 prose prose-invert prose-xs max-w-none">
+        // 💡 CRITICAL: Added 'max-w-full overflow-hidden' so the markdown renderer respects container bounds
+        <div className="relative z-10 prose prose-invert prose-xs max-w-full overflow-hidden">
           <ReactMarkdown
             components={{
               code({ node, inline, className, children, ...props }: any) {
@@ -45,7 +49,7 @@ export function OutputTerminal({ content }: OutputTerminalProps) {
                   />
                 ) : (
                   <code
-                    className="bg-slate-800/60 border border-slate-700/40 text-blue-300 px-1.5 py-0.5 rounded text-[11px] font-mono"
+                    className="bg-slate-800/60 border border-slate-700/40 text-blue-300 px-1.5 py-0.5 rounded text-[11px] font-mono whitespace-pre-wrap break-all"
                     {...props}
                   >
                     {children}
@@ -76,7 +80,6 @@ interface CodeBlockWindowProps {
   rawCode: string;
 }
 
-// 💡 Isolated Sub-Component to manage localized copy state transitions cleanly
 function CodeBlockWindow({
   language,
   rawCode,
@@ -88,15 +91,15 @@ function CodeBlockWindow({
     try {
       await navigator.clipboard.writeText(rawCode);
       setIsCopied(true);
-      setTimeout(() => setIsCopied(false), 2000); // Reset icon status after 2 seconds
+      setTimeout(() => setIsCopied(false), 2000);
     } catch (err) {
       console.error('Failed to copy execution script payload:', err);
     }
   };
 
   return (
-    <div className="relative my-4 rounded-xl overflow-hidden border border-slate-800 bg-[#0A0E17]">
-      {/* Code block window utility header */}
+    // 💡 Added 'max-w-full w-full' here to keep it inside the terminal frame
+    <div className="relative my-4 rounded-xl overflow-hidden border border-slate-800 bg-[#0A0E17] max-w-full w-full">
       <div className="flex items-center justify-between px-4 py-2 bg-[#0F1420] text-[10px] font-mono text-slate-400 border-b border-slate-800/80 select-none">
         <div className="flex items-center gap-2">
           <span className="uppercase tracking-wider font-semibold text-blue-400">
@@ -105,7 +108,6 @@ function CodeBlockWindow({
         </div>
 
         <div className="flex items-center gap-3">
-          {/* Actionable Copy Action Trigger Button Node */}
           <button
             onClick={handleCopy}
             className="flex items-center gap-1.5 text-slate-500 hover:text-slate-300 transition-colors focus:outline-none"
@@ -132,20 +134,25 @@ function CodeBlockWindow({
         </div>
       </div>
 
-      <SyntaxHighlighter
-        style={vscDarkPlus}
-        language={language}
-        PreTag="div"
-        customStyle={{
-          margin: 0,
-          padding: '1.25rem',
-          background: 'transparent',
-          fontSize: '11px',
-        }}
-        {...props}
-      >
-        {rawCode}
-      </SyntaxHighlighter>
+      {/* 💡 Isolated layout overflow controls injected right here */}
+      <div className="w-full overflow-x-auto">
+        <SyntaxHighlighter
+          style={vscDarkPlus}
+          language={language}
+          PreTag="div"
+          customStyle={{
+            margin: 0,
+            padding: '1.25rem',
+            background: 'transparent',
+            fontSize: '11px',
+            // 💡 Forces structural overflow to stay isolated to just the code container body
+            minWidth: '100%',
+          }}
+          {...props}
+        >
+          {rawCode}
+        </SyntaxHighlighter>
+      </div>
     </div>
   );
 }

@@ -12,33 +12,35 @@ export default function LandingPage() {
       <div className="absolute top-[60vh] right-0 w-[400px] h-[400px] bg-blue-600/5 blur-[130px] rounded-full pointer-events-none" />
 
       {/* Navigation Header */}
-      <header className="border-b border-purple-950/20 bg-[#07050E]/60 backdrop-blur-md sticky top-0 z-50 px-6 py-4">
+      <header className="border-b border-purple-950/20 bg-[#07050E]/60 backdrop-blur-md sticky top-0 z-50 px-4 md:px-6 py-4">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="h-8 w-8 rounded-xl bg-purple-600 flex items-center justify-center shadow-[0_0_15px_rgba(147,51,234,0.5)]">
               <Bot className="h-4 w-4 text-white" />
             </div>
-            <span className="font-mono font-bold tracking-wider text-white text-lg">
+            <span className="font-mono font-bold tracking-wider text-white text-base md:text-lg">
               NEURA.AI
             </span>
           </div>
 
           {/* Action Button Cluster */}
-          <div className="flex items-center gap-3">
-            {/* 💡 NEW: Direct Onboarding Portal for Authenticated Users */}
+          <div className="flex items-center gap-2 md:gap-3">
+            {/* 💡 FIXED: Responsive sizing preserves layout symmetry across device parameters */}
             <Link
               href="/onboarding"
-              className="group flex items-center gap-1.5 px-4 py-1.5 bg-purple-600 hover:bg-purple-500 text-white text-xs font-mono rounded-xl transition-all shadow-[0_0_15px_rgba(147,51,234,0.2)]"
+              className="group flex items-center justify-center gap-1.5 p-2 sm:px-4 sm:py-1.5 bg-purple-600 hover:bg-purple-500 text-white text-xs font-mono rounded-xl transition-all shadow-[0_0_15px_rgba(147,51,234,0.2)]"
+              title="Go to Onboarding"
             >
-              <LayoutDashboard className="h-3 w-3" />
-              Go to Onboarding
+              <LayoutDashboard className="h-3.5 w-3.5 sm:h-3 sm:w-3" />
+              <span className="hidden sm:inline">Go to Onboarding</span>
             </Link>
 
             <Link
               href="/login"
-              className="group flex items-center gap-1.5 px-4 py-1.5 bg-purple-900/40 hover:bg-purple-800 text-purple-100 border border-purple-700/40 text-xs font-mono rounded-xl transition-all shadow-lg"
+              className="group flex items-center gap-1.5 px-3 py-2 sm:px-4 sm:py-1.5 bg-purple-900/40 hover:bg-purple-800 text-purple-100 border border-purple-700/40 text-xs font-mono rounded-xl transition-all shadow-lg"
             >
-              Access Panel
+              <span className="hidden xs:inline">Access Panel</span>
+              <span className="xs:hidden">Access</span>
               <ArrowRight className="h-3 w-3 group-hover:translate-x-0.5 transition-transform" />
             </Link>
           </div>
