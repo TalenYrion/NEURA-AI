@@ -41,7 +41,7 @@ export default function OnboardingForm() {
     resolver: zodResolver(createWorkspaceSchema),
     defaultValues: {
       name: '',
-      selectedModel: GroqModel.LLAMA_33_70B,
+      selectedModel: GroqModel.LLAMA_3_1_8B,
     },
   });
 
